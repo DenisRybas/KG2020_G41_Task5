@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package kg2019examples_task5animation.utils2d;
+package rybas.utils2d;
 
-import kg2019examples_task5animation.math.Rectangle;
-import kg2019examples_task5animation.math.Vector2;
+import rybas.math.Rectangle;
+import rybas.math.Vector2;
 
 /**
  *

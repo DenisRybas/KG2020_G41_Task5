@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package kg2019examples_task5animation.model;
+package rybas.model.force;
 
-import kg2019examples_task5animation.math.Vector2;
+import rybas.math.Vector2;
 
 /**
  *
@@ -44,6 +44,6 @@ public class ForceSource {
     public Vector2 getForceAt(Vector2 p) {
         if (Math.abs(value) < 1e-12)
             return new Vector2(0, 0);
-        return location.add(p.mul(-1)).normolized().mul(value);
+        return location.add(p.multiplyOnNumber(-1)).normalized().multiplyOnNumber(value);
     }
 }

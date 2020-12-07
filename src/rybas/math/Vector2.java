@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package kg2019examples_task5animation.math;
+package rybas.math;
 
 /**
  *
@@ -44,7 +44,7 @@ public class Vector2 {
      * @param n число, на которое умножается вектор
      * @return новый вектор
      */
-    public Vector2 mul(double n) {
+    public Vector2 multiplyOnNumber(double n) {
         return new Vector2((x * n), y * n);
     }
     
@@ -53,7 +53,7 @@ public class Vector2 {
      * Если вектор нулевой, то возвращает новый нулевой вектор
      * @return Получившийся вектор
      */
-    public Vector2 normolized() {
+    public Vector2 normalized() {
         double len = length();
         if (len < 1e-12) /*Да, здесь не по модулю, т.к. корень не будет отрицательным.*/
             return new Vector2(0, 0);

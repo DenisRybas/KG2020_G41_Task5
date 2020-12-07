@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package kg2019examples_task5animation;
+package rybas;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -14,40 +14,43 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
-import kg2019examples_task5animation.timers.AbstractWorldTimer;
+
+import rybas.math.Rectangle;
+import rybas.math.Vector2;
+import rybas.model.system.SolarSystem;
+import rybas.timers.AbstractWorldTimer;
+
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import kg2019examples_task5animation.math.Rectangle;
-import kg2019examples_task5animation.model.Field;
-import kg2019examples_task5animation.model.Puck;
-import kg2019examples_task5animation.model.World;
-import kg2019examples_task5animation.timers.UpdateWorldTimer;
-import kg2019examples_task5animation.utils2d.ScreenConverter;
-import kg2019examples_task5animation.utils2d.ScreenPoint;
+
+import rybas.model.planet.Planet;
+import rybas.model.World;
+import rybas.timers.UpdateWorldTimer;
+import rybas.utils2d.ScreenConverter;
+import rybas.utils2d.ScreenPoint;
 
 /**
- *
  * @author Alexey
  */
 public class DrawPanel extends JPanel implements ActionListener,
         MouseListener, MouseMotionListener, MouseWheelListener {
     private ScreenConverter sc;
-    private World w;
-    private AbstractWorldTimer uwt;
+    private World world;
+    private AbstractWorldTimer worldTimer;
     private Timer drawTimer;
-    
+
     public DrawPanel() {
         super();
-        Field f = new Field(
-                new Rectangle(0, 10, 10, 10),
-            0.1, 9.8);
-        w = new World(new Puck(1, 0.3, f.getRectangle().getCenter()), f);
+        SolarSystem solarSystem = new SolarSystem(
+                new Rectangle(0, 0, 800, 600));
+        world = new World(new Planet(1, 0.3, new Vector2(0, 0),
+                100, f);
         sc = new ScreenConverter(f.getRectangle(), 450, 450);
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.addMouseWheelListener(this);
-        
-        (uwt = new UpdateWorldTimer(w, 10)).start();
+
+        (worldTimer = new UpdateWorldTimer(world, 10)).start();
         drawTimer = new Timer(40, this);
         drawTimer.start();
     }
@@ -55,11 +58,10 @@ public class DrawPanel extends JPanel implements ActionListener,
     @Override
     public void paint(Graphics g) {
         BufferedImage bi = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
-        w.draw((Graphics2D)bi.getGraphics(), sc);
+        world.draw((Graphics2D) bi.getGraphics(), sc);
         g.drawImage(bi, 0, 0, null);
     }
-    
-    
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -68,7 +70,7 @@ public class DrawPanel extends JPanel implements ActionListener,
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+
     }
 
     @Override
@@ -78,46 +80,46 @@ public class DrawPanel extends JPanel implements ActionListener,
             direction = 1;
         else if (e.getButton() == MouseEvent.BUTTON3)
             direction = -1;
-        w.getExternalForce().setValue(10*direction);
+        world.getExternalForce().setValue(10 * direction);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        w.getExternalForce().setValue(0);
+        world.getExternalForce().setValue(0);
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        w.getExternalForce().setLocation(sc.s2r(new ScreenPoint(e.getX(), e.getY())));
+        world.getExternalForce().setLocation(sc.s2r(new ScreenPoint(e.getX(), e.getY())));
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        w.getExternalForce().setLocation(sc.s2r(new ScreenPoint(e.getX(), e.getY())));
+        world.getExternalForce().setLocation(sc.s2r(new ScreenPoint(e.getX(), e.getY())));
     }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        double oldMu = w.getF().getMu();
-        oldMu = Math.round(oldMu*100 + e.getWheelRotation())*0.01;
-        
+        double oldMu = world.getSolarSystem().getMu();
+        oldMu = Math.round(oldMu * 100 + e.getWheelRotation()) * 0.01;
+
         if (oldMu < -1)
             oldMu = -1;
         else if (oldMu > 1)
             oldMu = 1;
         else if (Math.abs(oldMu) < 0.005)
             oldMu = 0;
-        w.getF().setMu(oldMu);
+        world.getSolarSystem().setMu(oldMu);
     }
-    
+
 }

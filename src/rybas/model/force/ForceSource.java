@@ -15,9 +15,9 @@ public class ForceSource {
     private Vector2 location;
     private double value;
     
-    public ForceSource(Vector2 location) {
+    public ForceSource(Vector2 location, double value) {
         this.location = location;
-        value = 0;
+        this.value = value;
     }
 
     public Vector2 getLocation() {

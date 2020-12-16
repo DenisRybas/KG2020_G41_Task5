@@ -38,7 +38,10 @@ public class Vector2 {
     public Vector2 add(Vector2 other) {
         return new Vector2(x + other.x, y + other.y);
     }
-    
+
+    public Vector2 minus(Vector2 other) {
+        return new Vector2(x - other.x, y - other.y);
+    }
     /**
      * Вычисляет новый вектор, котрый является результатом умножаения текущего вектора на число
      * @param n число, на которое умножается вектор
@@ -47,7 +50,11 @@ public class Vector2 {
     public Vector2 multiplyOnNumber(double n) {
         return new Vector2((x * n), y * n);
     }
-    
+
+    public Vector2 multiplyOnVector(Vector2 p){
+        return new Vector2(p.getX() * getX(), p.getY() * getY());
+    }
+
     /**
      * Метод возвращает единичный (нормализованный) вектор
      * Если вектор нулевой, то возвращает новый нулевой вектор

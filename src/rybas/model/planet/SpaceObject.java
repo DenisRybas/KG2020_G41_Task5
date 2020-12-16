@@ -4,9 +4,13 @@ import rybas.Defaults;
 import rybas.math.Vector2;
 
 import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 
 public class SpaceObject {
-
+    private List<Vector2> orbit;
+    private NameOfObject name;
     private double mass, radius;
     private Vector2 position;
     private Vector2 velocity;
@@ -14,13 +18,20 @@ public class SpaceObject {
     private Vector2 resultantForce;
     private System system;
 
-    public SpaceObject(double mass, double radius, Vector2 position) {
+    public SpaceObject(NameOfObject name, double mass, double radius,
+                       Vector2 position, Vector2 velocity) {
+        this.name = name;
         this.mass = mass;
         this.radius = radius;
         this.position = position;
-        this.velocity = new Vector2(0, 0);
+        this.velocity = velocity;
         this.acceleration = new Vector2(0, 0);
         this.resultantForce = new Vector2(0, 0);
+        this.orbit = new LinkedList<>();
+    }
+
+    public NameOfObject getName() {
+        return name;
     }
 
     public Vector2 getAcceleration() {
@@ -29,6 +40,19 @@ public class SpaceObject {
 
     public void setAcceleration(Vector2 acceleration) {
         this.acceleration = acceleration;
+    }
+
+    public List<Vector2> getOrbit() {
+        return orbit;
+    }
+
+    public void setOrbit(List<Vector2> orbit) {
+        this.orbit = orbit;
+    }
+
+    public void addPointToOrbit(Vector2 point) {
+        if (orbit.size() > 100) orbit.remove(0);
+        this.orbit.add(point);
     }
 
     public double getMass() {
@@ -63,20 +87,16 @@ public class SpaceObject {
         this.velocity = velocity;
     }
 
-    public double calculateDistance(Vector2 positionOfObject) {
-        return Math.sqrt(Math.pow(getPosition().getX() - positionOfObject.getX(), 2)
-                + Math.pow(getPosition().getY() - positionOfObject.getY(), 2));
+    public double calculateDistance(SpaceObject spaceObject) {
+        return getPosition().minus(spaceObject.getPosition()).length();
     }
 
-    public Vector2 calculateResultantForce(Collection<SpaceObject>
-                                                   objectsInSystem) {
-        Vector2 resultantForce = getPosition();
-        for (SpaceObject object : objectsInSystem) {
-            Vector2 gravityForce = getPosition().add(object.getPosition())
-                    .multiplyOnNumber(Defaults.G * getMass() * object.getMass()
-                            / Math.pow(calculateDistance(object.getPosition()), 2));
-            resultantForce.add(gravityForce);
-        }
-        return resultantForce;
+    public double calculateGravitationalForce(SpaceObject object) {
+        return getMass() * 5.972 * object.getMass()
+                / Math.pow(calculateDistance(object), 2);
+    }
+
+    public void setResultantForce(Vector2 resultantForce) {
+        this.resultantForce = resultantForce;
     }
 }

@@ -11,9 +11,10 @@ import java.util.List;
 public class Planet extends SpaceObject {
     private List<Moon> moonList;
 
-    public Planet(double mass, double radius, Vector2 position, double density,
-                  List<Moon> moonList) {
-        super(mass, radius, position, density);
+    public Planet(NameOfObject name, Vector2 position,
+                  double mass, double radius,
+                  Vector2 velocity, List<Moon> moonList) {
+        super(name, mass, radius, position ,velocity);
         this.moonList = moonList;
     }
 

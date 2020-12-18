@@ -46,6 +46,17 @@ public class DrawPanel extends JPanel implements ActionListener,
         super();
 
         setSize(1920, 1080);
+        Defaults.EARTH.addMoon(Defaults.MOON);
+
+        Defaults.JUPITER.addMoon(Defaults.IO);
+        Defaults.JUPITER.addMoon(Defaults.GANYMEDE);
+        Defaults.JUPITER.addMoon(Defaults.EUROPA);
+        Defaults.JUPITER.addMoon(Defaults.CALLISTO);
+
+        Defaults.SATURN.addMoon(Defaults.TITAN);
+        Defaults.SATURN.addMoon(Defaults.ENCELADE);
+        Defaults.SATURN.addMoon(Defaults.IAPETUS);
+
         SolarSystem solarSystem = new SolarSystem(
                 new Rectangle(0, 1080, 1920, 1080
                         /*0, (int) Defaults.HEIGHT, (int) Defaults.WIDTH, (int) Defaults.HEIGHT*/

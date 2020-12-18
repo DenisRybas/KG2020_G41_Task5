@@ -3,10 +3,7 @@ package rybas.model.planet;
 import rybas.Defaults;
 import rybas.math.Vector2;
 
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class SpaceObject {
     private List<Vector2> orbit;
@@ -17,6 +14,7 @@ public class SpaceObject {
     private Vector2 acceleration;
     private Vector2 resultantForce;
     private System system;
+    private List<SpaceObject> moonList;
 
     public SpaceObject(NameOfObject name, double mass, double radius,
                        Vector2 position, Vector2 velocity) {
@@ -28,6 +26,7 @@ public class SpaceObject {
         this.acceleration = new Vector2(0, 0);
         this.resultantForce = new Vector2(0, 0);
         this.orbit = new LinkedList<>();
+        moonList = new ArrayList<>();
     }
 
     public NameOfObject getName() {
@@ -88,12 +87,29 @@ public class SpaceObject {
     }
 
     public double calculateDistance(SpaceObject spaceObject) {
-        return getPosition().minus(spaceObject.getPosition()).length();
+        return getPosition().multiplyOnNumber(78).minus(spaceObject.getPosition().multiplyOnNumber(78)).length(); //TODO: НЕ GETPOSITION!!!
     }
 
     public double calculateGravitationalForce(SpaceObject object) {
         return Defaults.G * getMass() * object.getMass()
-                / Math.pow(calculateDistance(object), 2) / Math.pow(10, 17);
+                / Math.pow(calculateDistance(object), 2) / Math.pow(10, 15);
+    }
+
+
+    public void addMoon(SpaceObject moon) {
+        moonList.add(moon);
+    }
+
+    public void removeMoon(SpaceObject moon) {
+        moonList.remove(moon);
+    }
+
+    public void setMoonList(List<SpaceObject> moonList) {
+        this.moonList = moonList;
+    }
+
+    public List<SpaceObject> getMoonList() {
+        return moonList;
     }
 
     public void setResultantForce(Vector2 resultantForce) {

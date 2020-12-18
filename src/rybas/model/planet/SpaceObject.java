@@ -51,7 +51,7 @@ public class SpaceObject {
     }
 
     public void addPointToOrbit(Vector2 point) {
-        if (orbit.size() > 100) orbit.remove(0);
+        if (orbit.size() > 10000) orbit.remove(0);
         this.orbit.add(point);
     }
 
@@ -92,8 +92,8 @@ public class SpaceObject {
     }
 
     public double calculateGravitationalForce(SpaceObject object) {
-        return getMass() * 5.972 * object.getMass()
-                / Math.pow(calculateDistance(object), 2);
+        return Defaults.G * getMass() * object.getMass()
+                / Math.pow(calculateDistance(object), 2) / Math.pow(10, 17);
     }
 
     public void setResultantForce(Vector2 resultantForce) {

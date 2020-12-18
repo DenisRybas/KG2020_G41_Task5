@@ -95,22 +95,23 @@ public class World {
             g.setColor(Color.WHITE);
             switch (spaceObject.getName()) {
                 case SUN -> {
-                    radius /= 10;
+                    radius = 150;
                 }
                 case MERCURY, PLUTO -> {
-                    radius *= 10;
+                    radius = 15;
                 }
                 case VENUS, EARTH -> {
-                    radius *= 3;
+                    radius = 20;
                 }
                 case MARS -> {
-                    radius *= 5;
+                    radius = 10;
                 }
-                case JUPITER, SATURN -> {
-                    radius /= 2;
+                case JUPITER -> {
+                    radius = 50;
                 }
+                case SATURN -> radius = 45;
                 case URANUS, NEPTUNE -> {
-                    radius /= 1.6;
+                    radius = 40;
                 }
             }
             int rh = sc.r2sDistanceH(radius);

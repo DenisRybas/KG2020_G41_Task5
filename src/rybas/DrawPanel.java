@@ -45,22 +45,32 @@ public class DrawPanel extends JPanel implements ActionListener,
     public DrawPanel() {
         super();
 
-        setSize((int) Defaults.WIDTH, (int) Defaults.HEIGHT);
+        setSize(1920, 1080);
         SolarSystem solarSystem = new SolarSystem(
-                new Rectangle(0, (int) Defaults.HEIGHT, (int) Defaults.WIDTH, (int) Defaults.HEIGHT), new LinkedList<>() {{
-                    add(Defaults.MARS); add(Defaults.EARTH); add(Defaults.JUPITER);
-                    add(Defaults.MERCURY); add(Defaults.NEPTUNIUM); add(Defaults.PLUTO);
-                    add(Defaults.SATURN); add(Defaults.SUN); add(Defaults.URANUS);
-                    add(Defaults.VENUS);
+                new Rectangle(0, 1080, 1920, 1080
+                        /*0, (int) Defaults.HEIGHT, (int) Defaults.WIDTH, (int) Defaults.HEIGHT*/
+                ), new LinkedList<>() {{
+            add(Defaults.MARS);
+            add(Defaults.EARTH);
+            add(Defaults.JUPITER);
+            add(Defaults.MERCURY);
+            add(Defaults.NEPTUNIUM);
+            add(Defaults.PLUTO);
+            add(Defaults.SATURN);
+            add(Defaults.SUN);
+            add(Defaults.URANUS);
+            add(Defaults.VENUS);
         }});
         world = new World(solarSystem);
-        sc = new ScreenConverter(solarSystem.getSystem(), (int) Defaults.WIDTH, (int) Defaults.HEIGHT);
+        sc = new ScreenConverter(solarSystem.getSystem(), 1920, 1080);
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.addMouseWheelListener(this);
 
-        (worldTimer = new UpdateWorldTimer(world, 10)).start();
-        drawTimer = new Timer(40, this);
+//        (worldTimer = new UpdateWorldTimer(world, 10)).start();
+//        drawTimer = new Timer(40, this);
+        (worldTimer = new UpdateWorldTimer(world, 23)).start();
+        drawTimer = new Timer(23, this);
         drawTimer.start();
     }
 
